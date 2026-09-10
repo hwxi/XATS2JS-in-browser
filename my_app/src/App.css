@@ -184,3 +184,82 @@
   color: #4b5565;
   font-size: 15px;
 }
+
+
+/* compiler page */
+.compiler-page {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  min-height: calc(100vh - 72px);
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.editor-pane,
+.output-pane {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.page-title,
+.section-title {
+  margin: 0;
+}
+
+.page-copy {
+  margin: 0;
+  color: #4b5565;
+  line-height: 1.5;
+}
+
+.output-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.source-box,
+.output-box {
+  width: 100%;
+  min-height: 280px;
+  box-sizing: border-box;
+  font: 14px/1.5 monospace;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+  color: #111;
+  overflow: auto;
+  white-space: pre-wrap;
+}
+
+.source-box {
+  resize: vertical;
+}
+
+.compile-btn {
+  width: fit-content;
+  padding: 10px 16px;
+  border: 1px solid #222;
+  border-radius: 8px;
+  background: #222;
+  color: #fff;
+  cursor: pointer;
+}
+
+.toggle-btn {
+  width: fit-content;
+  padding: 8px 12px;
+  border: 1px solid #c7d0de;
+  border-radius: 8px;
+  background: #fff;
+  color: #1f2430;
+  cursor: pointer;
+}
+
+.output-box--muted {
+  background: #f8fafc;
+}
