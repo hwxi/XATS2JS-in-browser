@@ -1,4 +1,3 @@
-import '../../sourcefile/browser_fs_patch'   // installs XATSOPT_fpath_full$read override
 import { preludeFiles } from './preludeData'
 
 const { registerXatsFile } = globalThis

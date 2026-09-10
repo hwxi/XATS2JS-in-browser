@@ -2,9 +2,77 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>my-app</title>
+
+    <script>
+      (function () {
+        const fileMap = Object.create(null);
+
+        const stdout = {
+          buffer: "",
+          write(s) {
+            this.buffer += String(s);
+            console.log(String(s));
+          },
+          clear() {
+            this.buffer = "";
+          }
+        };
+
+        const stderr = {
+          buffer: "",
+          write(s) {
+            this.buffer += String(s);
+            console.log(String(s));
+          },
+          clear() {
+            this.buffer = "";
+          }
+        };
+
+        globalThis.__xats_browser_runtime__ = {
+          fileMap,
+          stdout,
+          stderr,
+          registerFile(path, text) {
+            fileMap[String(path)] = String(text);
+          },
+          readFile(path) {
+            const p = String(path);
+            if (!(p in fileMap)) {
+              throw new Error("Missing browser file: " + p);
+            }
+            return fileMap[p];
+          }
+        };
+
+        globalThis.process = {
+          env: {},
+          argv: ["xats2js-browser"],
+          stdout,
+          stderr,
+          stdin: {}
+        };
+
+        globalThis.require = function (name) {
+          if (name === "fs" || name === "node:fs") {
+            return {
+              constants: { R_OK: 4 },
+              accessSync(path) {
+                globalThis.__xats_browser_runtime__.readFile(path);
+              },
+              readFileSync(path) {
+                return globalThis.__xats_browser_runtime__.readFile(path);
+              }
+            };
+          }
+          throw new Error("Unsupported require in browser: " + name);
+        };
+      })();
+    </script>
+
+    <script src="/xats2js_jsemit01_ats2.js"></script>
+    <script src="/browser_fs_patch.js"></script>
   </head>
   <body>
     <div id="root"></div>
